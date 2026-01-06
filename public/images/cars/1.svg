@@ -1,0 +1,22 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f9fafb"/>
+  <g transform="translate(80, 90)">
+    <!-- Sedan body -->
+    <rect x="30" y="60" width="180" height="50" rx="8" fill="#000000"/>
+    <!-- Sedan top -->
+    <path d="M 50 60 L 70 30 L 160 30 L 180 60" fill="#1f2937"/>
+    <!-- Windows -->
+    <rect x="75" y="35" width="35" height="20" fill="#3b82f6" opacity="0.6"/>
+    <rect x="120" y="35" width="35" height="20" fill="#3b82f6" opacity="0.6"/>
+    <!-- Headlights -->
+    <rect x="210" y="70" width="8" height="15" rx="2" fill="#fbbf24"/>
+    <!-- Wheels -->
+    <circle cx="65" cy="120" r="18" fill="#111827"/>
+    <circle cx="175" cy="120" r="18" fill="#111827"/>
+    <circle cx="65" cy="120" r="10" fill="#9ca3af"/>
+    <circle cx="175" cy="120" r="10" fill="#9ca3af"/>
+  </g>
+  <text x="200" y="270" text-anchor="middle" fill="#000" font-size="18" font-family="Arial" font-weight="bold">
+    Premium Sedan
+  </text>
+</svg>

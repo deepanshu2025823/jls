@@ -1,0 +1,20 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f3f4f6"/>
+  <g transform="translate(100, 100)">
+    <!-- Car body -->
+    <rect x="20" y="50" width="160" height="60" rx="5" fill="#1f2937"/>
+    <!-- Car top -->
+    <path d="M 40 50 L 60 20 L 140 20 L 160 50" fill="#374151"/>
+    <!-- Windows -->
+    <rect x="65" y="25" width="30" height="20" fill="#60a5fa" opacity="0.7"/>
+    <rect x="105" y="25" width="30" height="20" fill="#60a5fa" opacity="0.7"/>
+    <!-- Wheels -->
+    <circle cx="50" cy="120" r="15" fill="#111827"/>
+    <circle cx="150" cy="120" r="15" fill="#111827"/>
+    <circle cx="50" cy="120" r="8" fill="#6b7280"/>
+    <circle cx="150" cy="120" r="8" fill="#6b7280"/>
+  </g>
+  <text x="200" y="260" text-anchor="middle" fill="#6b7280" font-size="16" font-family="Arial">
+    Luxury Vehicle
+  </text>
+</svg>
