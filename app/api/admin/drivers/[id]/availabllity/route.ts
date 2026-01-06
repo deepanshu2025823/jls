@@ -32,10 +32,10 @@ async function verifyAuth(request: NextRequest) {
   }
 }
 
-// PATCH - Toggle driver availability
+// ✅ FIX: Update params type
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   let connection;
 
@@ -48,6 +48,8 @@ export async function PATCH(
       );
     }
 
+    // ✅ FIX: Await params
+    const params = await context.params;
     const driverId = params.id;
     const body = await request.json();
     const { isAvailable } = body;
