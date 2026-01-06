@@ -1,3 +1,4 @@
+import { dbConfig } from '@/lib/db';
 // app/api/vehicles/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
