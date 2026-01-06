@@ -33,10 +33,10 @@ async function verifyAuth(request: NextRequest) {
   }
 }
 
-// PUT - Update driver
+// ✅ FIX: PUT - Update driver
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   let connection;
 
@@ -49,6 +49,8 @@ export async function PUT(
       );
     }
 
+    // ✅ FIX: Await params
+    const params = await context.params;
     const driverId = params.id;
     const body = await request.json();
     const { 
@@ -174,10 +176,10 @@ export async function PUT(
   }
 }
 
-// DELETE - Delete driver
+// ✅ FIX: DELETE - Delete driver
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   let connection;
 
@@ -190,6 +192,8 @@ export async function DELETE(
       );
     }
 
+    // ✅ FIX: Await params
+    const params = await context.params;
     const driverId = params.id;
 
     connection = await mysql.createConnection(dbConfig);
