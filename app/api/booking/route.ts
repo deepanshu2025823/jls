@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
               }
             }
           },
-          addons: {
+          bookingAddons: {
             include: {
               addon: true
             }

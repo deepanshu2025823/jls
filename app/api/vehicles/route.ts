@@ -55,16 +55,16 @@ export async function GET(request: NextRequest) {
       where,
       include: {
         driver: {
-          include: {
-            user: {
-              select: {
-                firstName: true,
-                lastName: true,
-                rating: true
-              }
-            }
-          }
-        }
+  select: {
+    rating: true,  
+    user: {
+      select: {
+        firstName: true,
+        lastName: true
+      }
+    }
+  }
+}
       },
       orderBy: { pricePerHour: 'asc' }
     });

@@ -32,6 +32,7 @@ interface Addon {
   type: string;
   price: number;
   icon?: string;
+  isActive: boolean;
 }
 
 interface ExtraStop {

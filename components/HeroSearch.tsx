@@ -96,7 +96,7 @@ export default function HeroSearch() {
             <p className="text-xs text-gray-400">Date</p>
             <DatePicker
               selected={date}
-              onChange={(d) => setDate(d)}
+              onChange={(d: Date | null) => setDate(d)}
               minDate={new Date()}
               dateFormat="dd MMM yyyy"
               className="text-sm font-medium outline-none"

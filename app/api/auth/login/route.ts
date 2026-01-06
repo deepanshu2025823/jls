@@ -59,19 +59,17 @@ export async function POST(request: NextRequest) {
       { expiresIn: '7d' }
     );
 
-    // Prepare user data based on role
-    const userData = {
-      id: user.id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      phone: user.phone,
-      role: user.role,
-      membershipStatus: user.membershipStatus,
-      profileImage: user.profileImage,
-    };
+const userData: any = {  
+  id: user.id,
+  email: user.email,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  phone: user.phone,
+  role: user.role,
+  membershipStatus: user.membershipStatus,
+  profileImage: user.profileImage,
+};
 
-    // If user is a driver, fetch driver details
     if (user.role === 'DRIVER') {
       const [drivers]: any = await connection.execute(
         'SELECT * FROM driver WHERE userId = ?',

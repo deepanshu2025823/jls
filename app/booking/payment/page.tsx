@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
-export default function PaymentPage() {
+// Separate component that uses useSearchParams
+function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -91,7 +92,7 @@ export default function PaymentPage() {
     try {
       // Step 1: Create booking
       console.log('Creating booking...');
-      const bookingResponse = await fetch('/api/bookings', {
+      const bookingResponse = await fetch('/api/booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -449,5 +450,21 @@ export default function PaymentPage() {
         <Footer />
       </div>
     </div>
+  );
+}
+
+// Main component with Suspense wrapper
+export default function PaymentPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading payment page...</p>
+        </div>
+      </div>
+    }>
+      <PaymentContent />
+    </Suspense>
   );
 }
