@@ -32,10 +32,9 @@ async function verifyAuth(request: NextRequest) {
   }
 }
 
-// PUT - Update vehicle
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   let connection;
 
@@ -48,6 +47,7 @@ export async function PUT(
       );
     }
 
+    const params = await context.params;
     const vehicleId = params.id;
     const body = await request.json();
     const { 
@@ -157,10 +157,9 @@ export async function PUT(
   }
 }
 
-// DELETE - Delete vehicle
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   let connection;
 
@@ -173,6 +172,7 @@ export async function DELETE(
       );
     }
 
+    const params = await context.params;
     const vehicleId = params.id;
 
     connection = await mysql.createConnection(dbConfig);
