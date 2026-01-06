@@ -33,10 +33,9 @@ async function verifyAuth(request: NextRequest) {
   }
 }
 
-// PUT - Update user
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }  // ✅ YE SAHI HAI
 ) {
   let connection;
 
@@ -49,7 +48,8 @@ export async function PUT(
       );
     }
 
-    const userId = params.id;
+    const params = await context.params;  
+    const userId = params.id;             
     const body = await request.json();
     const { email, password, firstName, lastName, phone, role, membershipStatus, isActive } = body;
 
@@ -102,19 +102,19 @@ export async function PUT(
       isActive = ?,
       updatedAt = NOW()`;
     
-    let params: any[] = [email, firstName, lastName, phone, role, membershipStatus, isActive ? 1 : 0];
+    let updateParams: any[] = [email, firstName, lastName, phone, role, membershipStatus, isActive ? 1 : 0];
 
     // If password is provided, update it
     if (password && password.trim() !== '') {
       const hashedPassword = await bcrypt.hash(password, 10);
       updateQuery += `, password = ?`;
-      params.push(hashedPassword);
+      updateParams.push(hashedPassword);
     }
 
     updateQuery += ` WHERE id = ?`;
-    params.push(userId);
+    updateParams.push(userId);
 
-    await connection.execute(updateQuery, params);
+    await connection.execute(updateQuery, updateParams);
 
     await connection.end();
 
@@ -137,10 +137,9 @@ export async function PUT(
   }
 }
 
-// DELETE - Delete user
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }  
 ) {
   let connection;
 
@@ -153,7 +152,8 @@ export async function DELETE(
       );
     }
 
-    const userId = params.id;
+    const params = await context.params; 
+    const userId = params.id;             
 
     connection = await mysql.createConnection(dbConfig);
 
