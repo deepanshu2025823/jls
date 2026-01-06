@@ -1,5 +1,4 @@
-import { dbConfig } from '@/lib/db';
-// app/api/bookings/route.ts
+// app/api/booking/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 

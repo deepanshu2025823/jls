@@ -5,8 +5,6 @@ import { sign } from 'jsonwebtoken';
 import mysql from 'mysql2/promise';
 import nodemailer from 'nodemailer';
 
-
-
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 // Email transporter configuration
