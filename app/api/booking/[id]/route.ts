@@ -4,13 +4,16 @@ import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
+    const bookingId = params.id;
+
     // Get token from Authorization header
     const authHeader = request.headers.get('authorization');
     const token = authHeader?.replace('Bearer ', '');
@@ -32,8 +35,6 @@ export async function GET(
         { status: 401 }
       );
     }
-
-    const bookingId = params.id;
 
     // Fetch booking with all related data
     const booking = await prisma.booking.findUnique({
@@ -106,9 +107,12 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
+    const bookingId = params.id;
+
     // Get token from Authorization header
     const authHeader = request.headers.get('authorization');
     const token = authHeader?.replace('Bearer ', '');
@@ -131,7 +135,6 @@ export async function PATCH(
       );
     }
 
-    const bookingId = params.id;
     const body = await request.json();
 
     // Check if booking exists and user has access
@@ -205,9 +208,12 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const params = await context.params;
+    const bookingId = params.id;
+
     // Get token from Authorization header
     const authHeader = request.headers.get('authorization');
     const token = authHeader?.replace('Bearer ', '');
@@ -229,8 +235,6 @@ export async function DELETE(
         { status: 401 }
       );
     }
-
-    const bookingId = params.id;
 
     // Check if booking exists and user has access
     const existingBooking = await prisma.booking.findUnique({
