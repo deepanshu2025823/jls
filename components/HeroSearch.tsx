@@ -53,10 +53,10 @@ export default function HeroSearch() {
   };
 
   return (
-    <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 w-[95%] sm:w-[92%] max-w-7xl bg-white rounded-2xl sm:rounded-[32px] shadow-2xl p-4 sm:p-6 z-30">
+    <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 w-[95%] sm:w-[92%] max-w-7xl bg-white rounded-2xl sm:rounded-[32px] shadow-2xl p-4 sm:p-6 z-30 will-change-transform">
       
       {/* Mobile: Stack vertically */}
-      <div className="flex flex-col gap-4 md:hidden">
+      <div className="flex flex-col gap-4 md:hidden" key="mobile-form">
         
         {/* Row 1: Pickup */}
         <InputItem
@@ -143,7 +143,7 @@ export default function HeroSearch() {
       </div>
 
       {/* Desktop & Tablet: Horizontal layout */}
-      <div className="hidden md:flex md:items-center md:justify-between md:gap-4 lg:gap-6">
+      <div className="hidden md:flex md:items-center md:justify-between md:gap-4 lg:gap-6" key="desktop-form">
 
         {/* PICKUP */}
         <InputItem
