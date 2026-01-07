@@ -1,6 +1,5 @@
 import Header from "@/components/header/Header";
 import Hero from "@/components/hero/Hero";
-import HeroSearch from "@/components/HeroSearch";
 import FleetSection from "@/components/sections/FleetSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import CityRoutesSection from "@/components/sections/CityRoutesSection"; 
@@ -13,7 +12,6 @@ export default function HomePage() {
     <>
       <Header />
       <Hero />
-      <HeroSearch />
       <FleetSection />
       <ServicesSection />
       <CityRoutesSection /> 
