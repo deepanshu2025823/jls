@@ -4,13 +4,17 @@ import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    // Await params for Next.js 15 compatibility
+    const params = await context.params;
+    const addressId = params.id;
+
     // Get token from Authorization header
     const authHeader = request.headers.get('authorization');
     const token = authHeader?.replace('Bearer ', '');
@@ -32,8 +36,6 @@ export async function PATCH(
         { status: 401 }
       );
     }
-
-    const addressId = params.id;
 
     // Check if address exists and belongs to user
     const address = await prisma.savedAddress.findUnique({
