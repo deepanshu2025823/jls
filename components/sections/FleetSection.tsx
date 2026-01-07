@@ -9,19 +9,19 @@ const fleetTypes = [
     id: 1,
     name: "SUV",
     description: "Acura MDX, Lexus RX, BMW X5",
-    image: "/images/fleet/sedan.svg",
+    image: "/images/fleet/01.svg",
   },
   {
     id: 2,
     name: "Premium SUV",
     description: "Mercedes E-Class, Lexus ES, Cadillac CT6, or similar.",
-    image: "/images/fleet/suv.svg",
+    image: "/images/fleet/02.svg",
   },
   {
     id: 3,
     name: "Luxury Sedan",
     description: "Cadillac Escalade, Range Rover, or similar.",
-    image: "/images/fleet/premium-suv.svg",
+    image: "/images/fleet/03.svg",
   },
 ];
 
