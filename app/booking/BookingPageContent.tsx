@@ -15,7 +15,7 @@ const vehicles = [
     luggage: '2 Luggage',
     models: 'Acura MDX, Lexus RX, BMW X5',
     price: 72.50,
-    image: '/images/fleet/sedan.svg'
+    image: '/images/fleet/01.svg'
   },
   {
     id: 'premium-suv',
@@ -24,7 +24,7 @@ const vehicles = [
     luggage: '4 Luggage',
     models: 'Mercedes E-Class, Lexus ES, Cadillac CT6, or similar.',
     price: 96.44,
-    image: '/images/fleet/suv.svg'
+    image: '/images/fleet/02.svg'
   },
   {
     id: 'executive-van',
@@ -33,7 +33,7 @@ const vehicles = [
     luggage: '4 Luggage',
     models: 'Cadillac Escalade, Lincoln Navigator, Chevrolet Suburban',
     price: 127.60,
-    image: '/images/fleet/premium-suv.svg'
+    image: '/images/fleet/03.svg'
   },
   {
     id: 'sprinter-van',
@@ -42,7 +42,7 @@ const vehicles = [
     luggage: '6 Luggage',
     models: 'Cadillac Escalade, Lincoln Navigator, Chevrolet Suburban',
     price: 182.50,
-    image: '/images/fleet/premium-suv.svg'
+    image: '/images/fleet/03.svg'
   }
 ];
 
@@ -51,6 +51,7 @@ export default function BookingPageContent() {
   const searchParams = useSearchParams();
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
   const [showBookingInfo, setShowBookingInfo] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   // ✅ DYNAMIC: Get data from URL params
   const bookingInfo = {
@@ -75,11 +76,10 @@ export default function BookingPageContent() {
       service: bookingInfo.service,
       date: bookingInfo.date,
       time: bookingInfo.time,
-      // Add selected vehicle price
       price: vehicles.find(v => v.id === selectedVehicle)?.price.toString() || '0'
     });
     
-    router.push(`/booking/pickup-info?${params.toString()}`);
+    router.push(`/booking/personal-details?${params.toString()}`);
   };
 
   const handleEditSearch = () => {
@@ -88,37 +88,36 @@ export default function BookingPageContent() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Desktop Header - ORIGINAL */}
       <div className="headerbgimg hidden lg:block">
         <Header />
       </div>
 
-      {/* Mobile Header */}
-      <div className="lg:hidden sticky top-0 z-50 bg-white border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <button onClick={() => router.back()} className="p-2">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Mobile Header - NEW DESIGN */}
+      <div className="lg:hidden sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="flex items-center justify-between px-4 py-3">
+          <button onClick={() => router.back()} className="p-2 -ml-2">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button 
             onClick={() => setShowBookingInfo(!showBookingInfo)}
-            className="flex items-center gap-2 text-sm"
+            className="flex-1 text-center"
           >
-            <span className="font-medium truncate max-w-[180px]">{bookingInfo.pickup}</span>
-            <svg className={`w-4 h-4 transition-transform ${showBookingInfo ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <h1 className="text-base font-bold">{bookingInfo.pickup}</h1>
+            <p className="text-xs text-gray-500">{bookingInfo.date} • {bookingInfo.time}</p>
           </button>
-          <button onClick={handleEditSearch} className="p-2">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          <button onClick={handleEditSearch} className="p-2 -mr-2">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
           </button>
         </div>
 
         {/* Expandable Booking Info - Mobile */}
         {showBookingInfo && (
-          <div className="mt-3 pb-3 space-y-3 border-t pt-3">
+          <div className="border-t border-gray-200 p-4 space-y-3 bg-gray-50">
             <div className="flex items-start gap-2">
               <svg className="w-4 h-4 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -155,7 +154,7 @@ export default function BookingPageContent() {
         )}
       </div>
 
-      {/* Desktop Booking Info Bar */}
+      {/* Desktop Booking Info Bar - ORIGINAL */}
       <div className="hidden lg:block bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between gap-6">
@@ -206,6 +205,7 @@ export default function BookingPageContent() {
 
       {/* Main Content */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-12">
+        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
           <h1 className="text-xl sm:text-3xl font-bold text-gray-900">Select a vehicle class</h1>
           <span className="bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full text-xs font-medium w-fit">Step 1/3</span>
@@ -213,21 +213,21 @@ export default function BookingPageContent() {
 
         <p className="text-gray-600 mb-4 sm:mb-8 text-xs sm:text-sm">All prices include estimated VAT, fees, and tolls</p>
 
-        {/* Vehicle Cards */}
+        {/* Vehicle Cards - MOBILE IMPROVED */}
         <div className="space-y-3 mb-6 sm:mb-8">
           {vehicles.map((vehicle) => (
             <div
               key={vehicle.id}
               onClick={() => setSelectedVehicle(vehicle.id)}
-              className={`bg-white rounded-lg p-4 cursor-pointer transition border-2 ${
+              className={`bg-white rounded-lg lg:rounded-lg p-4 cursor-pointer transition border-2 ${
                 selectedVehicle === vehicle.id
-                  ? 'border-black'
+                  ? 'border-black shadow-md lg:shadow-none'
                   : 'border-gray-200'
               }`}
             >
               <div className="flex items-start gap-3">
-                <div className="relative w-20 h-16 sm:w-32 sm:h-24 flex-shrink-0">
-                  <Image src={vehicle.image} alt={vehicle.name} fill className="object-contain" />
+                <div className="relative w-20 h-16 sm:w-32 sm:h-24 flex-shrink-0 bg-gray-50 lg:bg-transparent rounded-xl lg:rounded-none">
+                  <Image src={vehicle.image} alt={vehicle.name} fill className="object-contain p-2 lg:p-0" />
                 </div>
 
                 <div className="flex-1 min-w-0">
@@ -271,7 +271,7 @@ export default function BookingPageContent() {
               'Complimentary bottle of water'
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-2">
-                <svg className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 lg:w-5 lg:h-5 text-green-600 lg:text-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 <span className="text-xs text-gray-700 leading-relaxed">{item}</span>
@@ -294,8 +294,16 @@ export default function BookingPageContent() {
           </div>
         </div>
 
+        {/* Terms Link - Mobile Only */}
+        <button 
+          onClick={() => setShowTerms(!showTerms)}
+          className="lg:hidden text-sm underline mb-4 text-gray-700"
+        >
+          View terms & conditions
+        </button>
+
         {/* Fixed Bottom Button - Mobile */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg">
           <button
             onClick={handleContinue}
             disabled={!selectedVehicle}
@@ -309,7 +317,7 @@ export default function BookingPageContent() {
           </button>
         </div>
 
-        {/* Desktop Actions */}
+        {/* Desktop Actions - ORIGINAL */}
         <div className="hidden lg:flex justify-end">
           <button
             onClick={handleContinue}
@@ -327,9 +335,30 @@ export default function BookingPageContent() {
         <div className="lg:hidden h-20"></div>
       </div>
       
+      {/* Desktop Footer - ORIGINAL */}
       <div className="hidden lg:block">
         <Footer />
       </div>
+
+      {/* Terms Modal - Mobile Only */}
+      {showTerms && (
+        <div className="lg:hidden fixed inset-0 bg-black/50 z-50 flex items-end">
+          <div className="bg-white w-full rounded-t-3xl max-h-[80vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+              <h3 className="text-lg font-bold">Terms & Conditions</h3>
+              <button onClick={() => setShowTerms(false)} className="p-2">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 text-sm text-gray-700 space-y-4">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

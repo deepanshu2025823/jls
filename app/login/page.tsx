@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -43,16 +44,24 @@ export default function LoginPage() {
       localStorage.setItem('jls_token', data.token);
       localStorage.setItem('jls_user', JSON.stringify(data.user));
 
-      // Redirect based on role
-      const userRole = data.user.role;
-      if (userRole === 'ADMIN') {
-        router.push('/admin/dashboard');
-      } else if (userRole === 'DRIVER') {
-        router.push('/driver/dashboard');
-      } else if (userRole === 'CORPORATE') {
-        router.push('/corporate/dashboard');
+      // Check if there's a redirect URL
+      const redirectUrl = searchParams.get('redirect');
+      
+      if (redirectUrl) {
+        // Redirect to the intended page
+        router.push(redirectUrl);
       } else {
-        router.push('/');
+        // Default redirect based on role
+        const userRole = data.user.role;
+        if (userRole === 'ADMIN') {
+          router.push('/admin/dashboard');
+        } else if (userRole === 'DRIVER') {
+          router.push('/driver/dashboard');
+        } else if (userRole === 'CORPORATE') {
+          router.push('/corporate/dashboard');
+        } else {
+          router.push('/');
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Login failed. Please try again.');

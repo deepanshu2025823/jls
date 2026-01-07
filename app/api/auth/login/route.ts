@@ -5,7 +5,7 @@ import { sign } from 'jsonwebtoken';
 import mysql from 'mysql2/promise';
 import { dbConfig } from '@/lib/db';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function POST(request: NextRequest) {
   let connection;

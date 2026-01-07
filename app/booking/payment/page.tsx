@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
-// Separate component that uses useSearchParams
 function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -17,8 +16,8 @@ function PaymentContent() {
   const [saveCard, setSaveCard] = useState(false);
   const [showBookingInfo, setShowBookingInfo] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
-  // Get booking data from URL parameters
   const bookingInfo = {
     pickup: searchParams.get('pickup') || 'Not specified',
     dropoff: searchParams.get('drop') || 'Not specified',
@@ -34,7 +33,6 @@ function PaymentContent() {
     reference: searchParams.get('reference') || ''
   };
 
-  // Format card number with spaces
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\s/g, '');
     let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
@@ -43,7 +41,6 @@ function PaymentContent() {
     }
   };
 
-  // Format expiry date
   const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length >= 2) {
@@ -54,7 +51,6 @@ function PaymentContent() {
     }
   };
 
-  // Handle CVV input
   const handleCvvChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
     if (value.length <= 4) {
@@ -63,25 +59,21 @@ function PaymentContent() {
   };
 
   const handleCheckout = async () => {
-    // Validate all fields
     if (!cardName || !cardNumber || !expiryDate || !cvv) {
       alert('Please fill all payment fields');
       return;
     }
 
-    // Validate card number length
     if (cardNumber.replace(/\s/g, '').length < 13) {
       alert('Please enter a valid card number');
       return;
     }
 
-    // Validate expiry date
     if (expiryDate.length !== 5) {
       alert('Please enter a valid expiry date (MM/YY)');
       return;
     }
 
-    // Validate CVV
     if (cvv.length < 3) {
       alert('Please enter a valid CVV');
       return;
@@ -90,13 +82,12 @@ function PaymentContent() {
     setIsProcessing(true);
 
     try {
-      // Step 1: Create booking
       console.log('Creating booking...');
       const bookingResponse = await fetch('/api/booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          customerId: 'user_1766835439621_owqgx5ttl', // TODO: Replace with actual logged-in user ID
+          customerId: 'user_1766835439621_owqgx5ttl',
           vehicleId: bookingInfo.vehicle,
           bookingType: 'INDIVIDUAL',
           tripType: 'SINGLE_TRIP',
@@ -123,7 +114,6 @@ function PaymentContent() {
 
       console.log('Booking created:', bookingData.booking.bookingNumber);
 
-      // Step 2: Process payment
       console.log('Processing payment...');
       const paymentResponse = await fetch('/api/payments', {
         method: 'POST',
@@ -140,7 +130,7 @@ function PaymentContent() {
             cvv
           },
           saveCard,
-          userId: 'user_1766835439621_owqgx5ttl' // TODO: Replace with actual user ID
+          userId: 'user_1766835439621_owqgx5ttl'
         })
       });
 
@@ -152,7 +142,6 @@ function PaymentContent() {
 
       console.log('Payment successful:', paymentData.payment.transactionId);
 
-      // Success! Redirect to confirmation page
       router.push(`/booking/confirmation?bookingId=${bookingData.booking.id}`);
 
     } catch (error: any) {
@@ -169,51 +158,50 @@ function PaymentContent() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Desktop Header - ORIGINAL */}
       <div className="headerbgimg hidden lg:block">
         <Header />
       </div>
 
-      {/* Mobile Header */}
-      <div className="lg:hidden sticky top-0 z-50 bg-white border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <button onClick={() => router.back()} className="p-2">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Mobile Header - NEW DESIGN */}
+      <div className="lg:hidden sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div className="flex items-center justify-between px-4 py-3">
+          <button onClick={() => router.back()} className="p-2 -ml-2">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button 
             onClick={() => setShowBookingInfo(!showBookingInfo)}
-            className="flex items-center gap-2 text-sm"
+            className="flex-1 text-center"
           >
-            <span className="font-medium truncate max-w-[180px]">{bookingInfo.pickup}</span>
-            <svg className={`w-4 h-4 transition-transform ${showBookingInfo ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
+            <h1 className="text-base font-bold">{bookingInfo.pickup}</h1>
+            <p className="text-xs text-gray-500">{bookingInfo.date} • {bookingInfo.time}</p>
           </button>
-          <button onClick={handleEditSearch} className="p-2">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          <button onClick={handleEditSearch} className="p-2 -mr-2">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
           </button>
         </div>
 
         {/* Expandable Booking Info - Mobile */}
         {showBookingInfo && (
-          <div className="mt-3 pb-3 space-y-3 border-t pt-3">
+          <div className="border-t border-gray-200 p-4 space-y-3 bg-gray-50">
             <div className="flex items-start gap-2">
-              <svg className="w-4 h-4 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               </svg>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <p className="text-xs text-gray-500">Pickup Location</p>
                 <p className="text-sm font-medium text-gray-900">{bookingInfo.pickup}</p>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <svg className="w-4 h-4 text-gray-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               </svg>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <p className="text-xs text-gray-500">Drop Location</p>
                 <p className="text-sm font-medium text-gray-900">{bookingInfo.dropoff}</p>
               </div>
@@ -236,7 +224,7 @@ function PaymentContent() {
         )}
       </div>
 
-      {/* Desktop Booking Info Bar */}
+      {/* Desktop Booking Info Bar - ORIGINAL */}
       <div className="hidden lg:block bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between gap-6">
@@ -296,87 +284,86 @@ function PaymentContent() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-12">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-12 pb-32 lg:pb-12">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 gap-2">
           <h1 className="text-xl sm:text-3xl font-bold text-gray-900">Payment Info</h1>
           <span className="bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full text-xs font-medium w-fit">Step 3/3</span>
         </div>
 
-        <p className="text-gray-600 mb-4 text-xs sm:text-sm">Add credit or debit card</p>
+        <p className="text-gray-600 mb-4 text-sm">Add credit or debit card</p>
 
-        {/* Payment Form */}
-        <div className="bg-white rounded-lg p-4 mb-4 border border-gray-200">
-          <div className="space-y-4">
-            {/* Card Name */}
-            <div>
-              <label className="block text-xs text-gray-700 mb-1.5">Name on card*</label>
-              <input
-                type="text"
-                value={cardName}
-                onChange={(e) => setCardName(e.target.value)}
-                placeholder="John Doe"
-                className="w-full px-3 py-2.5 bg-gray-50 rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
-                disabled={isProcessing}
-              />
-            </div>
-
-            {/* Card Number */}
-            <div>
-              <label className="block text-xs text-gray-700 mb-1.5">Card number*</label>
-              <input
-                type="text"
-                value={cardNumber}
-                onChange={handleCardNumberChange}
-                placeholder="1234 5678 9012 3456"
-                className="w-full px-3 py-2.5 bg-gray-50 rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
-                disabled={isProcessing}
-              />
-            </div>
-
-            {/* Expiry & CVV */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs text-gray-700 mb-1.5">Expiry date*</label>
-                <input
-                  type="text"
-                  value={expiryDate}
-                  onChange={handleExpiryChange}
-                  placeholder="MM/YY"
-                  className="w-full px-3 py-2.5 bg-gray-50 rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
-                  disabled={isProcessing}
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-gray-700 mb-1.5">CVV*</label>
-                <input
-                  type="text"
-                  value={cvv}
-                  onChange={handleCvvChange}
-                  placeholder="123"
-                  className="w-full px-3 py-2.5 bg-gray-50 rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
-                  disabled={isProcessing}
-                />
-              </div>
-            </div>
-
-            {/* Save Card */}
-            <label className="flex items-center gap-2.5 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={saveCard}
-                onChange={(e) => setSaveCard(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-300"
-                disabled={isProcessing}
-              />
-              <span className="text-xs text-gray-700">Save card to your list</span>
-            </label>
+        {/* Payment Form - Mobile Improved */}
+        <div className="bg-white rounded-2xl lg:rounded-lg p-4 mb-4 border border-gray-200 space-y-4">
+          {/* Card Name */}
+          <div>
+            <label className="block text-sm lg:text-xs text-gray-700 mb-2 lg:mb-1.5 font-medium lg:font-normal">Name on card*</label>
+            <input
+              type="text"
+              value={cardName}
+              onChange={(e) => setCardName(e.target.value)}
+              placeholder="John Doe"
+              className="w-full px-4 lg:px-3 py-3 lg:py-2.5 bg-gray-50 rounded-xl lg:rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
+              disabled={isProcessing}
+            />
           </div>
+
+          {/* Card Number */}
+          <div>
+            <label className="block text-sm lg:text-xs text-gray-700 mb-2 lg:mb-1.5 font-medium lg:font-normal">Card number*</label>
+            <input
+              type="text"
+              value={cardNumber}
+              onChange={handleCardNumberChange}
+              placeholder="1234 5678 9012 3456"
+              className="w-full px-4 lg:px-3 py-3 lg:py-2.5 bg-gray-50 rounded-xl lg:rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
+              disabled={isProcessing}
+            />
+          </div>
+
+          {/* Expiry & CVV */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm lg:text-xs text-gray-700 mb-2 lg:mb-1.5 font-medium lg:font-normal">Expiry date*</label>
+              <input
+                type="text"
+                value={expiryDate}
+                onChange={handleExpiryChange}
+                placeholder="MM/YY"
+                className="w-full px-4 lg:px-3 py-3 lg:py-2.5 bg-gray-50 rounded-xl lg:rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
+                disabled={isProcessing}
+              />
+            </div>
+            <div>
+              <label className="block text-sm lg:text-xs text-gray-700 mb-2 lg:mb-1.5 font-medium lg:font-normal">CVV*</label>
+              <input
+                type="text"
+                value={cvv}
+                onChange={handleCvvChange}
+                placeholder="123"
+                className="w-full px-4 lg:px-3 py-3 lg:py-2.5 bg-gray-50 rounded-xl lg:rounded-lg border-0 focus:ring-2 focus:ring-black outline-none text-sm"
+                disabled={isProcessing}
+              />
+            </div>
+          </div>
+
+          {/* Save Card */}
+          <label className="flex items-center gap-3 cursor-pointer p-2 lg:p-0 rounded-lg lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent transition">
+            <input
+              type="checkbox"
+              checked={saveCard}
+              onChange={(e) => setSaveCard(e.target.checked)}
+              className="w-5 h-5 lg:w-4 lg:h-4 rounded border-gray-300 text-black focus:ring-black"
+              disabled={isProcessing}
+            />
+            <span className="text-sm lg:text-xs text-gray-700">Save card to your list</span>
+          </label>
         </div>
 
         {/* Security Info */}
         <div className="space-y-3 mb-6">
-          <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-            <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <div className="flex items-start gap-2 p-3 bg-white rounded-2xl lg:rounded-lg lg:bg-gray-50 border border-gray-200">
+            <svg className="w-5 h-5 lg:w-4 lg:h-4 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
             <p className="text-gray-700 text-xs leading-relaxed">
@@ -384,8 +371,8 @@ function PaymentContent() {
             </p>
           </div>
 
-          <div className="flex items-start gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-            <svg className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <div className="flex items-start gap-2 p-3 bg-white rounded-2xl lg:rounded-lg lg:bg-gray-50 border border-gray-200">
+            <svg className="w-5 h-5 lg:w-4 lg:h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
             </svg>
             <p className="text-gray-700 text-xs leading-relaxed">
@@ -394,66 +381,93 @@ function PaymentContent() {
           </div>
         </div>
 
-        {/* Fixed Bottom Button - Mobile */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
-          <button
-            onClick={handleCheckout}
-            disabled={isProcessing}
-            className={`w-full py-3.5 rounded-full font-semibold transition text-sm ${
-              isProcessing 
-                ? 'bg-gray-400 text-white cursor-not-allowed' 
-                : 'bg-black text-white'
-            }`}
-          >
-            {isProcessing ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Processing...
-              </span>
-            ) : (
-              'Proceed to Checkout'
-            )}
-          </button>
-        </div>
-
-        {/* Desktop Actions */}
-        <div className="hidden lg:flex justify-end">
-          <button
-            onClick={handleCheckout}
-            disabled={isProcessing}
-            className={`px-8 py-3 rounded-full font-semibold transition text-sm ${
-              isProcessing 
-                ? 'bg-gray-400 text-white cursor-not-allowed' 
-                : 'bg-black text-white hover:bg-gray-800'
-            }`}
-          >
-            {isProcessing ? (
-              <span className="flex items-center gap-2">
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Processing...
-              </span>
-            ) : (
-              'Proceed to Checkout'
-            )}
-          </button>
-        </div>
-
-        <div className="lg:hidden h-20"></div>
+        {/* Terms Link - Mobile Only */}
+        <button 
+          onClick={() => setShowTerms(!showTerms)}
+          className="lg:hidden text-sm underline mb-4 text-gray-700"
+        >
+          View terms & conditions
+        </button>
       </div>
+
+      {/* Fixed Bottom Button - Mobile */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg">
+        <button
+          onClick={handleCheckout}
+          disabled={isProcessing}
+          className={`w-full py-4 rounded-full font-bold transition text-base ${
+            isProcessing 
+              ? 'bg-gray-400 text-white cursor-not-allowed' 
+              : 'bg-black text-white'
+          }`}
+        >
+          {isProcessing ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </span>
+          ) : (
+            'Proceed to Checkout'
+          )}
+        </button>
+      </div>
+
+      {/* Desktop Actions - ORIGINAL */}
+      <div className="hidden lg:flex justify-end max-w-4xl mx-auto px-6 pb-5">
+        <button
+          onClick={handleCheckout}
+          disabled={isProcessing}
+          className={`px-8 py-3 rounded-full font-semibold transition text-sm ${
+            isProcessing 
+              ? 'bg-gray-400 text-white cursor-not-allowed' 
+              : 'bg-black text-white hover:bg-gray-800'
+          }`}
+        >
+          {isProcessing ? (
+            <span className="flex items-center gap-2">
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </span>
+          ) : (
+            'Proceed to Checkout'
+          )}
+        </button>
+      </div>
+
+      {/* Desktop Footer - ORIGINAL */}
       <div className="hidden lg:block">
         <Footer />
       </div>
+
+      {/* Terms Modal - Mobile Only */}
+      {showTerms && (
+        <div className="lg:hidden fixed inset-0 bg-black/50 z-50 flex items-end">
+          <div className="bg-white w-full rounded-t-3xl max-h-[80vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+              <h3 className="text-lg font-bold">Terms & Conditions</h3>
+              <button onClick={() => setShowTerms(false)} className="p-2">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4 text-sm text-gray-700 space-y-4">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-// Main component with Suspense wrapper
 export default function PaymentPage() {
   return (
     <Suspense fallback={
