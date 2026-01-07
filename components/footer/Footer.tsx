@@ -100,311 +100,71 @@ const socialLinks = [
   },
 ];
 
+// Bottom Navigation Items
+const bottomNavItems = [
+  {
+    name: "Home",
+    href: "/",
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    )
+  },
+  {
+    name: "Services",
+    href: "/services",
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+    )
+  },
+  {
+    name: "Book",
+    href: "/book",
+    icon: (
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+      </svg>
+    ),
+    isCenter: true
+  },
+  {
+    name: "Bookings",
+    href: "/bookings",
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+      </svg>
+    )
+  },
+  {
+    name: "Profile",
+    href: "/profile",
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    )
+  },
+];
+
 export default function Footer() {
   const [isLanguageOpen, setIsLanguageOpen] = React.useState(false);
+  const [activeNav, setActiveNav] = React.useState("Home");
 
   return (
-    <footer className="bg-black text-white">
-      {/* Top Section - Contact Info */}
-      <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          {/* Mobile: Vertical Stack */}
-          <div className="flex flex-col gap-4 md:hidden">
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              <span className="text-white/90">+1800900122</span>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <svg
-                className="w-5 h-5 mt-0.5 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span className="text-white/90">
-                55 Main Street, 2nd Blok, 3rd Floor, New York City
-              </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="text-white/90">
-                Mon-Sat: 09:00 - 17:00 - Sun: Closed
-              </span>
-            </div>
-          </div>
-
-          {/* Desktop: Horizontal */}
-          <div className="hidden md:flex items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              <span className="text-white/90">+1800900122</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span className="text-white/90">
-                55 Main Street, 2nd Blok, 3rd Floor, New York City
-              </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="text-white/90">
-                Mon-Sat: 09:00 - 17:00 - Sun: Closed
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Company */}
-          <div>
-            <h3 className="text-lg font-bold mb-6">Company</h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Top Cities */}
-          <div>
-            <h3 className="text-lg font-bold mb-6">Top cities</h3>
-            <ul className="space-y-3">
-              {footerLinks.topCities.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Explore */}
-          <div>
-            <h3 className="text-lg font-bold mb-6">Explore</h3>
-            <ul className="space-y-3">
-              {footerLinks.explore.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Classes */}
-          <div>
-            <h3 className="text-lg font-bold mb-6">Classes</h3>
-            <ul className="space-y-3">
-              {footerLinks.classes.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Recent Posts */}
-          <div>
-            <h3 className="text-lg font-bold mb-6">Recent Posts</h3>
-            <div className="space-y-4">
-              {recentPosts.map((post) => (
-                <div key={post.id} className="flex gap-3 group cursor-pointer">
-                  <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs text-white/50 mb-1">{post.date}</p>
-                    <h4 className="text-sm text-white/90 group-hover:text-white transition-colors line-clamp-2">
-                      {post.title}
-                    </h4>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Social Links */}
-            <div className="mt-8">
-              <h4 className="text-sm font-bold mb-4">Follow Us</h4>
-              <div className="flex gap-3">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                    aria-label={social.name}
-                  >
-                    {social.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          {/* Mobile: Vertical Stack */}
-          <div className="flex flex-col items-center gap-4 md:hidden">
-            <p className="text-white/50 text-sm text-center">© 2025 JLS</p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              <Link href="/terms" className="text-white/50 hover:text-white text-sm transition-colors">
-                Terms
-              </Link>
-              <Link href="/privacy" className="text-white/50 hover:text-white text-sm transition-colors">
-                Privacy policy
-              </Link>
-              <Link href="/legal" className="text-white/50 hover:text-white text-sm transition-colors">
-                Legal notice
-              </Link>
-              <Link href="/accessibility" className="text-white/50 hover:text-white text-sm transition-colors">
-                Accessibility
-              </Link>
-            </div>
-          </div>
-
-          {/* Desktop: Original Layout */}
-          <div className="hidden md:flex items-center justify-between gap-4">
-            <p className="text-white/50 text-sm">© 2025 JLS Worldwide Chauffeured Service</p>
-
-            <div className="flex items-center gap-6">
-              <Link href="/terms" className="text-white/50 hover:text-white text-sm transition-colors">
-                Terms
-              </Link>
-              <Link href="/privacy" className="text-white/50 hover:text-white text-sm transition-colors">
-                Privacy policy
-              </Link>
-              <Link href="/legal" className="text-white/50 hover:text-white text-sm transition-colors">
-                Legal notice
-              </Link>
-              <Link href="/accessibility" className="text-white/50 hover:text-white text-sm transition-colors">
-                Accessibility
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-2 relative">
-              <span className="text-white/50 text-sm">Language</span>
-              <button 
-                onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-              >
-                <span className="text-lg">🇬🇧</span>
-                <span className="text-sm">En</span>
+    <>
+      <footer className="bg-black text-white pb-24 md:pb-0">
+        {/* Top Section - Contact Info */}
+        <div className="border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            {/* Mobile: Vertical Stack */}
+            <div className="flex flex-col gap-4 md:hidden">
+              <div className="flex items-center gap-3">
                 <svg
-                  className={`w-4 h-4 transition-transform ${isLanguageOpen ? 'rotate-180' : ''}`}
+                  className="w-5 h-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -413,54 +173,387 @@ export default function Footer() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-              </button>
+                <span className="text-white/90">+1800900122</span>
+              </div>
 
-              {isLanguageOpen && (
-                <div className="absolute bottom-full right-0 mb-2 bg-zinc-900 rounded-lg shadow-lg border border-white/10 py-2 min-w-[160px] z-50">
-                  <button 
-                    onClick={() => setIsLanguageOpen(false)}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
-                  >
-                    <span className="text-lg">🇬🇧</span>
-                    <span className="text-sm">English</span>
-                  </button>
-                  <button 
-                    onClick={() => setIsLanguageOpen(false)}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
-                  >
-                    <span className="text-lg">🇪🇸</span>
-                    <span className="text-sm">Español</span>
-                  </button>
-                  <button 
-                    onClick={() => setIsLanguageOpen(false)}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
-                  >
-                    <span className="text-lg">🇫🇷</span>
-                    <span className="text-sm">Français</span>
-                  </button>
-                  <button 
-                    onClick={() => setIsLanguageOpen(false)}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
-                  >
-                    <span className="text-lg">🇩🇪</span>
-                    <span className="text-sm">Deutsch</span>
-                  </button>
-                  <button 
-                    onClick={() => setIsLanguageOpen(false)}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
-                  >
-                    <span className="text-lg">🇮🇹</span>
-                    <span className="text-sm">Italiano</span>
-                  </button>
-                </div>
-              )}
+              <div className="flex items-start gap-3">
+                <svg
+                  className="w-5 h-5 mt-0.5 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <span className="text-white/90">
+                  55 Main Street, 2nd Blok, 3rd Floor, New York City
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span className="text-white/90">
+                  Mon-Sat: 09:00 - 17:00 - Sun: Closed
+                </span>
+              </div>
+            </div>
+
+            {/* Desktop: Horizontal */}
+            <div className="hidden md:flex items-center justify-between gap-6">
+              <div className="flex items-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                <span className="text-white/90">+1800900122</span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <span className="text-white/90">
+                  55 Main Street, 2nd Blok, 3rd Floor, New York City
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <span className="text-white/90">
+                  Mon-Sat: 09:00 - 17:00 - Sun: Closed
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+
+        {/* Main Footer Content */}
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+            {/* Company */}
+            <div>
+              <h3 className="text-lg font-bold mb-6">Company</h3>
+              <ul className="space-y-3">
+                {footerLinks.company.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-white/70 hover:text-white transition-colors text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Top Cities */}
+            <div>
+              <h3 className="text-lg font-bold mb-6">Top cities</h3>
+              <ul className="space-y-3">
+                {footerLinks.topCities.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-white/70 hover:text-white transition-colors text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Explore */}
+            <div>
+              <h3 className="text-lg font-bold mb-6">Explore</h3>
+              <ul className="space-y-3">
+                {footerLinks.explore.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-white/70 hover:text-white transition-colors text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Classes */}
+            <div>
+              <h3 className="text-lg font-bold mb-6">Classes</h3>
+              <ul className="space-y-3">
+                {footerLinks.classes.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className="text-white/70 hover:text-white transition-colors text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Recent Posts */}
+            <div>
+              <h3 className="text-lg font-bold mb-6">Recent Posts</h3>
+              <div className="space-y-4">
+                {recentPosts.map((post) => (
+                  <div key={post.id} className="flex gap-3 group cursor-pointer">
+                    <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs text-white/50 mb-1">{post.date}</p>
+                      <h4 className="text-sm text-white/90 group-hover:text-white transition-colors line-clamp-2">
+                        {post.title}
+                      </h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Social Links */}
+              <div className="mt-8">
+                <h4 className="text-sm font-bold mb-4">Follow Us</h4>
+                <div className="flex gap-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-white/10">
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            {/* Mobile: Vertical Stack */}
+            <div className="flex flex-col items-center gap-4 md:hidden">
+              <p className="text-white/50 text-sm text-center">© 2025 JLS</p>
+              
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                <Link href="/terms" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Terms
+                </Link>
+                <Link href="/privacy" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Privacy policy
+                </Link>
+                <Link href="/legal" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Legal notice
+                </Link>
+                <Link href="/accessibility" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Accessibility
+                </Link>
+              </div>
+            </div>
+
+            {/* Desktop: Original Layout */}
+            <div className="hidden md:flex items-center justify-between gap-4">
+              <p className="text-white/50 text-sm">© 2025 JLS Worldwide Chauffeured Service</p>
+
+              <div className="flex items-center gap-6">
+                <Link href="/terms" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Terms
+                </Link>
+                <Link href="/privacy" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Privacy policy
+                </Link>
+                <Link href="/legal" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Legal notice
+                </Link>
+                <Link href="/accessibility" className="text-white/50 hover:text-white text-sm transition-colors">
+                  Accessibility
+                </Link>
+              </div>
+
+              <div className="flex items-center gap-2 relative">
+                <span className="text-white/50 text-sm">Language</span>
+                <button 
+                  onClick={() => setIsLanguageOpen(!isLanguageOpen)}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+                >
+                  <span className="text-lg">🇬🇧</span>
+                  <span className="text-sm">En</span>
+                  <svg
+                    className={`w-4 h-4 transition-transform ${isLanguageOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                {isLanguageOpen && (
+                  <div className="absolute bottom-full right-0 mb-2 bg-zinc-900 rounded-lg shadow-lg border border-white/10 py-2 min-w-[160px] z-50">
+                    <button 
+                      onClick={() => setIsLanguageOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
+                    >
+                      <span className="text-lg">🇬🇧</span>
+                      <span className="text-sm">English</span>
+                    </button>
+                    <button 
+                      onClick={() => setIsLanguageOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
+                    >
+                      <span className="text-lg">🇪🇸</span>
+                      <span className="text-sm">Español</span>
+                    </button>
+                    <button 
+                      onClick={() => setIsLanguageOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
+                    >
+                      <span className="text-lg">🇫🇷</span>
+                      <span className="text-sm">Français</span>
+                    </button>
+                    <button 
+                      onClick={() => setIsLanguageOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
+                    >
+                      <span className="text-lg">🇩🇪</span>
+                      <span className="text-sm">Deutsch</span>
+                    </button>
+                    <button 
+                      onClick={() => setIsLanguageOpen(false)}
+                      className="w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors"
+                    >
+                      <span className="text-lg">🇮🇹</span>
+                      <span className="text-sm">Italiano</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* ================= BOTTOM NAVIGATION (Mobile Only) ================= */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-lg border-t border-white/10 z-50 md:hidden">
+        <div className="flex items-center justify-around px-2 py-2">
+          {bottomNavItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              onClick={() => setActiveNav(item.name)}
+              className="flex-1 flex flex-col items-center justify-center group"
+            >
+              {item.isCenter ? (
+                <div className="relative -mt-8">
+                  <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all ${
+                    activeNav === item.name 
+                      ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 shadow-lg shadow-yellow-500/50' 
+                      : 'bg-gradient-to-r from-yellow-500 to-yellow-700'
+                  }`}>
+                    <div className="text-white">
+                      {item.icon}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className={`transition-colors ${
+                    activeNav === item.name ? 'text-yellow-400' : 'text-white/60 group-hover:text-white/90'
+                  }`}>
+                    {item.icon}
+                  </div>
+                  <span className={`text-xs mt-1 transition-colors ${
+                    activeNav === item.name ? 'text-yellow-400 font-medium' : 'text-white/60 group-hover:text-white/90'
+                  }`}>
+                    {item.name}
+                  </span>
+                </>
+              )}
+            </Link>
+          ))}
+        </div>
+      </nav>
+    </>
   );
 }
