@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-// Separate component that uses useSearchParams
+// LoginFormContent component jo useSearchParams use karta hai
 function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -41,15 +41,14 @@ function LoginFormContent() {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Store token and user data in memory (avoiding localStorage)
-      sessionStorage.setItem('jls_token', data.token);
-      sessionStorage.setItem('jls_user', JSON.stringify(data.user));
+      // Store token and user data
+      localStorage.setItem('jls_token', data.token);
+      localStorage.setItem('jls_user', JSON.stringify(data.user));
 
       // Check if there's a redirect URL
       const redirectUrl = searchParams.get('redirect');
       
       if (redirectUrl) {
-        // Redirect to the intended page
         router.push(redirectUrl);
       } else {
         // Default redirect based on role
@@ -209,7 +208,7 @@ function LoginFormContent() {
   );
 }
 
-// Main component with Suspense boundary
+// Main export component with Suspense boundary
 export default function LoginPage() {
   return (
     <Suspense fallback={
