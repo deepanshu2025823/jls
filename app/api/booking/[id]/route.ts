@@ -63,7 +63,7 @@ export async function GET(
         },
         vehicle: true,
         payment: true,
-        addons: {
+        bookingAddons: {
           include: {
             addon: true,
           },
