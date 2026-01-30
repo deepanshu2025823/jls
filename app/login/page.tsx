@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-// LoginFormContent component jo useSearchParams use karta hai
 function LoginFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -41,17 +40,14 @@ function LoginFormContent() {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Store token and user data
       localStorage.setItem('jls_token', data.token);
       localStorage.setItem('jls_user', JSON.stringify(data.user));
 
-      // Check if there's a redirect URL
       const redirectUrl = searchParams.get('redirect');
       
       if (redirectUrl) {
         router.push(redirectUrl);
       } else {
-        // Default redirect based on role
         const userRole = data.user.role;
         if (userRole === 'ADMIN') {
           router.push('/admin/dashboard');
@@ -72,7 +68,6 @@ function LoginFormContent() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center px-4">
-      {/* Back to Home - Top Left */}
       <div className="absolute top-6 left-6">
         <Link href="/" className="text-white hover:text-gray-300 flex items-center gap-2 transition">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +78,6 @@ function LoginFormContent() {
       </div>
 
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/">
             <Image src="/logo.svg" alt="JLS" width={120} height={54} className="mx-auto mb-6 invert" />
@@ -92,7 +86,6 @@ function LoginFormContent() {
           <p className="text-gray-400">Sign in to your JLS account</p>
         </div>
 
-        {/* Login Form */}
         <div className="bg-white rounded-3xl shadow-xl p-8">
           {error && (
             <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
@@ -101,7 +94,6 @@ function LoginFormContent() {
           )}
 
           <form onSubmit={handleLogin} className="space-y-6">
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
               <input
@@ -114,7 +106,6 @@ function LoginFormContent() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <div className="relative">
@@ -145,7 +136,6 @@ function LoginFormContent() {
               </div>
             </div>
 
-            {/* Remember & Forgot */}
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
@@ -156,7 +146,6 @@ function LoginFormContent() {
               </Link>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -166,7 +155,6 @@ function LoginFormContent() {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
@@ -176,7 +164,6 @@ function LoginFormContent() {
             </div>
           </div>
 
-          {/* Social Login */}
           <div className="grid grid-cols-2 gap-3">
             <button className="flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-full hover:bg-gray-50 transition">
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -195,7 +182,6 @@ function LoginFormContent() {
             </button>
           </div>
 
-          {/* Register Link */}
           <p className="text-center mt-6 text-sm text-gray-600">
             Don't have an account?{' '}
             <Link href="/register" className="text-gray-900 font-semibold hover:text-black underline">
@@ -208,7 +194,6 @@ function LoginFormContent() {
   );
 }
 
-// Main export component with Suspense boundary
 export default function LoginPage() {
   return (
     <Suspense fallback={
