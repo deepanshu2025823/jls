@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -26,6 +27,18 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   
   const dropdownRef = useRef<HTMLDivElement>(null);
   const user = useUser();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      setDropdownOpen(false);
+      router.push("/login"); 
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -131,12 +144,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
                   <button
                     type="button"
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log("Logout Clicked");
-                      setDropdownOpen(false);
-                    }}
+                    onClick={handleLogout} 
                     className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
                   >
                     Logout
